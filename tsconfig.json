@@ -1,14 +1,34 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "noImplicitAny": true,
+    "target": "ES6",
+    "lib": [
+      "ES6"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
+    "module": "commonjs",
+    "pretty": true,
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "./dist",
+    "allowJs": true,
+    "noEmit": false,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "baseUrl": "src"
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.json",
+    "**.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

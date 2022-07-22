@@ -1,7 +1,7 @@
 import {ErrorRes, SuccessRes} from "./utils/response";
 import {v4 as uuid} from "uuid";
-import {createToken} from "./utils/create-token";
-import {messages, users} from "../index";
+import {token} from "./utils/token";
+import {messages, users} from "./index";
 import express from "express";
 
 const router=express.Router()

@@ -3,7 +3,7 @@ import {v4 as uuid} from "uuid";
 import {Socket} from "socket.io";
 import path from "path";
 import {ChatData, UserData} from "./src/utils/interface";
-import {decodeToken} from "./src/utils/create-token";
+import {decodeToken} from "./src/utils/token";
 
 const app: Application = express();
 const http = require("http").Server(app);
