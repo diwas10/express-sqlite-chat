@@ -1,32 +1,19 @@
 import { Request, Response } from 'express';
-import { ErrorRes, SuccessRes } from '../../utils/response';
-// import {users} from "../../../index";
-import { v4 as uuid } from 'uuid';
-import { token } from '../../utils/token';
+import authService from './auth.service';
+import HttpException from '../../utils/http-exception';
+import { SuccessRes } from '../../utils/response';
 
 class AuthController {
 	authToken = async (req: Request, res: Response) => {
-		let users = [];
 		const { username, password } = req.body || {};
-		if (!username || !password) return res.status(422).send(ErrorRes({ message: 'Both Password and Username is Required' }));
+		if (!username || !password) throw new HttpException(422, 'Both Password and Username is Required');
 
-		let user = users.find(user => user.username === username);
+		const data = await authService.authToken({ username, password });
 
-		let resData = {};
-
-		if (user) {
-			resData = { type: 'login' };
-		} else {
-			user = { username, password, id: uuid() };
-			users.push(user);
-			resData = {
-				...user,
-				type: 'register',
-			};
-		}
-		resData = { ...res, ...user, token: token(user) };
-
-		res.status(200).send(SuccessRes({ message: 'Logged in successfully', data: resData }));
+		return SuccessRes(res, 200, {
+			data: { ...data, register: undefined },
+			message: `${data.register ? 'Registered' : 'Logged in'} Successfully`,
+		});
 	};
 }
 
