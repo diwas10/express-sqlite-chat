@@ -1,28 +1,26 @@
-import { Server } from 'socket.io';
+import SocketIo from 'socket.io';
+import { Server } from 'http';
 
 class SocketController {
+	public static io: SocketIo.Server;
+	private readonly instance: SocketController;
 
-	public io: Server;
-
-	constructor(io: Server) {
-		this.io = io;
+	constructor(server: Server) {
 		this.initSocketMiddleware();
-		this.initSocket();
+		SocketController.io = new SocketIo.Server(server, {
+			cors: {
+				origin: '*',
+				methods: ['GET', 'POST'],
+			},
+		});
+
+		if (this.instance) return this.instance;
+		this.instance = this;
 	}
 
 	initSocketMiddleware(): void {
-		this.io.use((socket, next) => {
+		SocketController.io.use((socket, next) => {
 			console.log(socket.handshake.headers);
-		});
-	}
-
-
-	initSocket(): void {
-		this.io.on('connection', (socket) => {
-			logger.success('********* User Connected ***********');
-			socket.on('disconnect', () => {
-				logger.error('********* User Disconnected ***********');
-			});
 		});
 	}
 }

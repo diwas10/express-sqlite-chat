@@ -40,7 +40,7 @@ class App {
 
 	init(): void {
 		PassportStrategy();
-		this.initSocket();
+		new SocketController(this.server);
 
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: true }));
@@ -52,16 +52,6 @@ class App {
 
 		this.app.use(RouteMiddleware);
 		this.app.use(ErrorMiddleware);
-	}
-
-	initSocket(): void {
-		this.io = new SocketIo.Server(this.server, {
-			cors: {
-				origin: '*',
-				methods: ['GET', 'POST'],
-			},
-		});
-		new SocketController(this.io);
 	}
 }
 
