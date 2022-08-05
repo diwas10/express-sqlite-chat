@@ -1,3 +1,3 @@
-const UnprotectedRoutes = ['/auth/token'];
+const UnprotectedRoutes = ['/auth/token', '/socket.io/'];
 
 export default UnprotectedRoutes;

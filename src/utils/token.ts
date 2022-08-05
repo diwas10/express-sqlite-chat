@@ -7,10 +7,10 @@ interface TokenData extends Omit<UserData, 'password'> {
 	iat: number;
 }
 
-const signToken = async (userData: Omit<TokenData, 'iat'>) => {
+const signToken = (userData: Omit<TokenData, 'iat'>) => {
 	const payload = { ...userData, iat: Date.now() };
 	try {
-		return await jwt.sign(payload, process.env.TOKEN_SECRET, {
+		return jwt.sign(payload, process.env.TOKEN_SECRET, {
 			algorithm: 'HS256',
 			expiresIn: process.env.TOKEN_EXPIRE_TIME || '10d',
 		});

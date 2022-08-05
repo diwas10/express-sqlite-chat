@@ -8,7 +8,7 @@ interface ChatData {
 interface UserData {
     username: string;
     password: string;
-    id: string
+    id: string;
 }
 
 export type {ChatData, UserData}

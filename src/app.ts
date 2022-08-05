@@ -4,12 +4,12 @@ import initRoutes from './core/all-routes';
 import * as SocketIo from 'socket.io';
 import ErrorMiddleware from './middlewares/error.middleware';
 import RouteMiddleware from './middlewares/route.middleware';
-import dotenv from 'dotenv';
 import PassportStrategy from './config/auth/passport-stategy';
 import AuthMiddleware from './middlewares/auth.middleware';
 import cors from 'cors';
 import corsOptions from './config/cors';
 import morgan from 'morgan';
+import SocketController from './core/Socket/socket.controller';
 
 class App {
 	public app: express.Express;
@@ -24,7 +24,6 @@ class App {
 		this.server = new Server(this.app);
 		this.env = process.env.NODE_ENV || 'development';
 
-		this.initSocket();
 		this.init();
 		this.listen();
 	}
@@ -41,6 +40,7 @@ class App {
 
 	init(): void {
 		PassportStrategy();
+		this.initSocket();
 
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: true }));
@@ -61,6 +61,7 @@ class App {
 				methods: ['GET', 'POST'],
 			},
 		});
+		new SocketController(this.io);
 	}
 }
 
